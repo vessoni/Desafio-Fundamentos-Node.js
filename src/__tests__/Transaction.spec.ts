@@ -78,4 +78,19 @@ describe('Transaction', () => {
       }),
     );
   });
+
+  it('Should not accept string in value', async () => {
+    const response = await request(app).post('/transactions').send({
+      title: 'Bicycle',
+      type: 'outcome',
+      value: 'string',
+    });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toMatchObject(
+      expect.objectContaining({
+        error: expect.any(String),
+      }),
+    );
+  });
 });
